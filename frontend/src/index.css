@@ -1,0 +1,392 @@
+
+/* =========================================================
+   PRIYONIX CRM — DARK SPACE THEME
+   Consistent typography, navy surfaces, neon accents
+   ========================================================= */
+
+:root {
+  --crm-bg: #071329;
+  --crm-sidebar: #081630;
+  --crm-surface: #0d1b38;
+  --crm-surface-hover: #14264b;
+  --crm-border: rgba(124, 157, 255, 0.18);
+
+  --crm-text: #f4f7ff;
+  --crm-text-secondary: #b4c5e8;
+  --crm-text-muted: #8298bf;
+
+  --crm-blue: #398cff;
+  --crm-cyan: #35e5ff;
+  --crm-purple: #7957ff;
+  --crm-green: #35e0a1;
+
+  --crm-gradient: linear-gradient(
+    110deg,
+    #398cff 0%,
+    #7957ff 55%,
+    #bd63ff 100%
+  );
+
+  --crm-font: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+/* -------------------------
+   Global dashboard
+------------------------- */
+
+.crm-content {
+  color: var(--crm-text);
+  font-family: var(--crm-font);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.crm-content h1,
+.crm-content h2,
+.crm-content h3,
+.crm-content h4,
+.crm-content h5,
+.crm-content h6 {
+  color: var(--crm-text);
+  font-family: var(--crm-font);
+  letter-spacing: -0.035em;
+}
+
+.crm-content h1 {
+  font-size: 32px !important;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.crm-content h2 {
+  font-size: 24px !important;
+  line-height: 1.3;
+  font-weight: 750;
+}
+
+.crm-content h3 {
+  font-size: 18px !important;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.crm-content p {
+  color: var(--crm-text-secondary);
+  font-size: 14px;
+}
+
+.crm-content small {
+  color: var(--crm-text-muted);
+}
+
+/* -------------------------
+   Sidebar
+------------------------- */
+
+.crm-sidebar {
+  color: var(--crm-text);
+  background: var(--crm-sidebar);
+  font-family: var(--crm-font);
+  font-size: 13px;
+}
+
+.sidebar-header h2 {
+  color: #ffffff !important;
+  font-family: var(--crm-font);
+  font-size: 22px !important;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.sidebar-header p {
+  color: #8ea9d6 !important;
+  font-family: var(--crm-font);
+  font-size: 10px !important;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.crm-nav-link {
+  color: var(--crm-text-secondary) !important;
+  font-family: var(--crm-font);
+  font-size: 13px !important;
+  font-weight: 600;
+  padding: 12px 12px !important;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.crm-nav-link:hover {
+  color: #ffffff !important;
+  background: var(--crm-surface-hover);
+  border-color: var(--crm-border);
+}
+
+.crm-nav-link.active,
+.crm-nav-link[aria-current="page"] {
+  color: #ffffff !important;
+  background: linear-gradient(
+    110deg,
+    rgba(57, 140, 255, 0.25),
+    rgba(121, 87, 255, 0.22)
+  );
+  border-color: rgba(81, 135, 255, 0.42);
+  box-shadow: inset 3px 0 0 var(--crm-blue);
+}
+
+.crm-nav-link small,
+.crm-nav-link span {
+  font-family: var(--crm-font);
+  font-size: 11px !important;
+}
+
+.sidebar-divider {
+  margin: 18px 0 !important;
+  border-color: var(--crm-border);
+}
+
+.logout-button {
+  color: var(--crm-text-secondary) !important;
+  background: rgba(67, 107, 174, 0.13);
+  border: 1px solid var(--crm-border);
+  border-radius: 10px;
+  font-family: var(--crm-font);
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+.logout-button:hover {
+  color: #ffffff !important;
+  background: rgba(57, 140, 255, 0.2);
+}
+
+/* -------------------------
+   KPI cards
+------------------------- */
+
+.dashboard-kpi-label,
+.kpi-label {
+  color: var(--crm-text-muted);
+  font-family: var(--crm-font);
+  font-size: 12px !important;
+  font-weight: 600;
+}
+
+.dashboard-kpi-value,
+.kpi-value {
+  color: #ffffff;
+  font-family: var(--crm-font);
+  font-size: 30px !important;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-kpi-description,
+.kpi-description {
+  color: var(--crm-text-secondary);
+  font-family: var(--crm-font);
+  font-size: 12px !important;
+}
+
+/* -------------------------
+   Pipeline
+------------------------- */
+
+.pipeline-title {
+  color: #ffffff;
+  font-size: 21px !important;
+  font-weight: 750;
+}
+
+.pipeline-description {
+  color: var(--crm-text-muted);
+  font-size: 13px !important;
+}
+
+.pipeline-stage {
+  color: var(--crm-text-secondary);
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+.pipeline-percentage {
+  color: var(--crm-cyan);
+  font-size: 11px !important;
+}
+
+.pipeline-count {
+  color: #ffffff;
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+/* -------------------------
+   Action Center
+------------------------- */
+
+.action-center-title {
+  color: #ffffff;
+  font-size: 21px !important;
+  font-weight: 750;
+}
+
+.action-center-item {
+  color: var(--crm-text-secondary);
+  font-size: 13px !important;
+}
+
+.action-center-item strong {
+  color: #ffffff;
+  font-size: 14px !important;
+}
+
+.action-center-item small {
+  color: var(--crm-text-muted);
+  font-size: 12px !important;
+}
+
+.action-center-count {
+  color: var(--crm-cyan);
+  font-size: 18px !important;
+  font-weight: 800;
+}
+
+/* -------------------------
+   Recent leads and tasks
+------------------------- */
+
+.recent-section-title {
+  color: #ffffff;
+  font-size: 20px !important;
+  font-weight: 750;
+}
+
+.recent-item {
+  color: var(--crm-text-secondary);
+  font-size: 13px !important;
+}
+
+.recent-item strong {
+  color: #ffffff;
+  font-size: 14px !important;
+}
+
+.recent-item small {
+  color: var(--crm-text-muted);
+  font-size: 12px !important;
+}
+
+/* -------------------------
+   Footer statistics
+------------------------- */
+
+.dashboard-footer-stat {
+  color: var(--crm-text-secondary);
+  font-size: 13px !important;
+}
+
+.dashboard-footer-stat strong {
+  color: #ffffff;
+  font-size: 19px !important;
+  font-weight: 800;
+}
+
+.dashboard-footer-stat small {
+  color: var(--crm-text-muted);
+  font-size: 11px !important;
+}
+
+/* -------------------------
+   Buttons and links
+------------------------- */
+
+.crm-content button,
+.crm-content a {
+  font-family: var(--crm-font);
+  font-size: 13px;
+}
+
+.crm-content button {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.crm-content button:focus-visible,
+.crm-content a:focus-visible,
+.crm-nav-link:focus-visible {
+  outline: 2px solid var(--crm-cyan);
+  outline-offset: 3px;
+}
+
+/* -------------------------
+   Responsive typography
+------------------------- */
+
+@media (max-width: 700px) {
+  .crm-content h1 {
+    font-size: 25px !important;
+  }
+
+  .crm-content h2 {
+    font-size: 20px !important;
+  }
+
+  .crm-content h3 {
+    font-size: 16px !important;
+  }
+
+  .dashboard-kpi-value,
+  .kpi-value {
+    font-size: 26px !important;
+  }
+
+  .pipeline-stage {
+    font-size: 12px !important;
+  }
+
+  .action-center-item {
+    font-size: 13px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crm-nav-link,
+  .crm-content button {
+    transition: none;
+  }
+}
+
+/* Remove the white gap around the application */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html,
+body {
+  background: #071329;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
