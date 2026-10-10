@@ -387,18 +387,9 @@ const [loading, setLoading] = useState(true);
   ========================================= */
 
   const convertLead = async (lead) => {
-    if (
-      String(
-        lead.status || ""
-      ).toUpperCase() === "WON"
-    ) {
-      alert(
-        "This lead is already converted."
-      );
-
-      return;
-    }
-
+    // WON is a sales-pipeline status, not proof that a customer record exists.
+    // Ask the backend to perform the conversion; it should return an existing
+    // linked customer or create one idempotently if none exists.
     if (
       !window.confirm(
         `Convert ${lead.name} into a customer?`

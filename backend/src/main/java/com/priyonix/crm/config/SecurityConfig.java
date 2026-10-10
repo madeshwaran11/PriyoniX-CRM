@@ -2,7 +2,6 @@ package com.priyonix.crm.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.HttpMethod;
 
@@ -28,9 +27,6 @@ import java.util.List;
 
 @Configuration
 public class SecurityConfig {
-
-    @Value("${app.cors.allowed-origins}")
-    private List<String> allowedOrigins;
 
     // =========================================================
     // PASSWORD ENCODER
@@ -84,7 +80,11 @@ public class SecurityConfig {
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
-        configuration.setAllowedOrigins(allowedOrigins);
+        configuration.setAllowedOrigins(
+                List.of(
+                        "http://localhost:5173"
+                )
+        );
 
         configuration.setAllowedMethods(
                 List.of(

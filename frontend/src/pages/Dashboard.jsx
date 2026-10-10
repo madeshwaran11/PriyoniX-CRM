@@ -20,6 +20,8 @@ function Dashboard() {
 
   const [loading, setLoading] = useState(true);
 
+  const [dashboardError, setDashboardError] = useState("");
+
   const user = useMemo(() => {
 
     try {
@@ -41,57 +43,53 @@ function Dashboard() {
   }, []);
 
   const loadDashboard = async () => {
-
     setLoading(true);
+    setDashboardError("");
 
     try {
-
       const results = await Promise.allSettled([
-
         api.get("/leads"),
-
         api.get("/customers"),
-
         api.get("/follow-ups"),
-
         api.get("/tasks"),
-
       ]);
 
-      if (results[0].status === "fulfilled") {
+      const readArray = (result) =>
+        result.status === "fulfilled" && Array.isArray(result.value.data)
+          ? result.value.data
+          : [];
 
-        setLeads(results[0].value.data || []);
+      // Clear a failed section rather than silently showing stale values.
+      setLeads(readArray(results[0]));
+      setCustomers(readArray(results[1]));
+      setFollowUps(readArray(results[2]));
+      setTasks(readArray(results[3]));
 
+      results.forEach((result, index) => {
+        if (result.status === "rejected") {
+          console.error(`Dashboard request ${index + 1} failed:`, result.reason);
+        }
+      });
+
+      const failedCount = results.filter(
+        (result) => result.status === "rejected"
+      ).length;
+
+      if (failedCount === results.length) {
+        setDashboardError(
+          "Dashboard data could not be loaded. Check your connection or session, then try again."
+        );
+      } else if (failedCount > 0) {
+        setDashboardError(
+          `${failedCount} dashboard section${failedCount > 1 ? "s" : ""} could not be loaded. Some metrics may be incomplete.`
+        );
       }
-
-      if (results[1].status === "fulfilled") {
-
-        setCustomers(results[1].value.data || []);
-
-      }
-
-      if (results[2].status === "fulfilled") {
-
-        setFollowUps(results[2].value.data || []);
-
-      }
-
-      if (results[3].status === "fulfilled") {
-
-        setTasks(results[3].value.data || []);
-
-      }
-
     } catch (error) {
-
       console.error("Dashboard loading error:", error);
-
+      setDashboardError("Unable to load dashboard data. Please try again.");
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   const normalize = (value) =>
@@ -2361,6 +2359,30 @@ function Dashboard() {
       `}</style>
 
       <div className="dashboard">
+
+        {dashboardError && (
+          <div
+            role="alert"
+            style={{
+              marginBottom: 18,
+              padding: "14px 18px",
+              borderRadius: 12,
+              border: "1px solid #f3a6ad",
+              background: "#fff1f2",
+              color: "#9f1239",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
+            <span>{dashboardError}</span>
+            <button type="button" onClick={loadDashboard}>
+              Retry
+            </button>
+          </div>
+        )}
 
         {/* TOP HEADER */}
 

@@ -20,6 +20,28 @@ const activityTypes = [
   "OTHER",
 ];
 
+// Convert a backend timestamp into the value required by datetime-local.
+// The backend currently returns LocalDateTime-style strings (without a timezone).
+const toDateTimeLocalValue = (value) => {
+  if (!value) return "";
+
+  const text = String(value).trim();
+
+  if (text.length >= 19 && text[10] === "T") {
+    return text.slice(0, 19);
+  }
+
+  if (text.length >= 16 && text[10] === "T") {
+    return `${text.slice(0, 16)}:00`;
+  }
+
+  if (text.length >= 10) {
+    return `${text.slice(0, 10)}T00:00:00`;
+  }
+
+  return "";
+};
+
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [leads, setLeads] = useState([]);
@@ -194,7 +216,9 @@ function Activities() {
 
         activityDate:
           form.activityDate
-            ? `${form.activityDate}T00:00:00`
+            ? (form.activityDate.length === 16
+                ? `${form.activityDate}:00`
+                : form.activityDate)
             : null,
       };
 
@@ -255,14 +279,9 @@ function Activities() {
 
     setEditingId(activity.id);
 
-    let activityDate = "";
-
-    if (activity.activityDate) {
-      activityDate =
-        String(
-          activity.activityDate
-        ).split("T")[0];
-    }
+    const activityDate = toDateTimeLocalValue(
+      activity.activityDate
+    );
 
     setForm({
       leadId:
@@ -3603,7 +3622,8 @@ function Activities() {
                   </label>
 
                   <input
-                    type="date"
+                    type="datetime-local"
+                    step="1"
                     name="activityDate"
                     value={
                       form.activityDate

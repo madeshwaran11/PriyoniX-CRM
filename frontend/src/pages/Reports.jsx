@@ -12,6 +12,7 @@ function Reports() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [generating, setGenerating] = useState(false);
+  const [reportsReady, setReportsReady] = useState(false);
 
   useEffect(() => {
     loadReports();
@@ -24,6 +25,7 @@ function Reports() {
   const loadReports = async () => {
     try {
       setLoading(true);
+      setReportsReady(false);
       setError("");
 
       const results = await Promise.allSettled([
@@ -108,11 +110,13 @@ function Reports() {
             result.status === "rejected"
         ).length;
 
+      setReportsReady(failedReports === 0);
+
       if (failedReports > 0) {
         setError(
           `${failedReports} report section${
             failedReports > 1 ? "s" : ""
-          } could not be loaded.`
+          } could not be loaded. Excel export is disabled until all report data loads successfully.`
         );
       }
     } catch (err) {
@@ -121,8 +125,9 @@ function Reports() {
         err
       );
 
+      setReportsReady(false);
       setError(
-        "Unable to load CRM reports."
+        "Unable to load CRM reports. Excel export is disabled until the data loads successfully."
       );
     } finally {
       setLoading(false);
@@ -422,6 +427,13 @@ function Reports() {
   ===================================== */
 
   const generateLatestReport = () => {
+    if (!reportsReady) {
+      setError(
+        "The report data is not ready. Click Refresh Reports and wait for all sections to load before exporting."
+      );
+      return;
+    }
+
     try {
       setGenerating(true);
       setError("");
@@ -2885,7 +2897,7 @@ function Reports() {
                 onClick={
                   generateLatestReport
                 }
-                disabled={generating}
+                disabled={generating || !reportsReady}
               >
                 {generating
                   ? "Generating Excel..."
